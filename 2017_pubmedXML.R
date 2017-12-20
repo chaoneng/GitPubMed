@@ -71,6 +71,12 @@ extract_xml <- function(theFile) {
 	ptype <- lapply(records, xpathSApply, ".//PublicationType", xmlValue)
 	ptype[sapply(ptype, is.list)] <- NA
 	ptype <- sapply(ptype, paste, collapse = "|")
+	
+	#
+	keyword <- lapply(records, xpathSApply, ".//KeywordList//keyword", xmlValue)
+	keyword[sapply(ptype, is.list)] <- NA
+	keyword <- sapply(ptype, paste, collapse = "|")
+	
 	theDF <- data.frame(pmid, doi, authors, year, articletitle, journal, volume, issue, pages, abstract, meshHeadings, grantAgency, grantNumber, grantCountry, ptype, stringsAsFactors = FALSE)
 	return(theDF)
 }
